@@ -1,0 +1,23 @@
+char* convertToTitle(int columnNumber) {
+    char* result = (char*)malloc(8 * sizeof(char)); 
+    int index = 0;
+
+    while (columnNumber > 0) {
+        columnNumber--; 
+        int remainder = columnNumber % 26;
+        result[index++] = remainder + 'A';
+        columnNumber /= 26;
+    }
+
+    result[index] = '\0'; 
+
+    
+    int len = index;
+    for (int i = 0; i < len / 2; i++) {
+        char temp = result[i];
+        result[i] = result[len - i - 1];
+        result[len - i - 1] = temp;
+    }
+
+    return result;
+}
