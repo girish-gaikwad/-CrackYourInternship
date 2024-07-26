@@ -1,0 +1,29 @@
+char* addBinary(char* a, char* b) {
+    int lenA = strlen(a);
+    int lenB = strlen(b);
+    int maxLength = lenA > lenB ? lenA : lenB;
+    
+    char* result = (char*)malloc((maxLength + 2) * sizeof(char)); 
+    result[maxLength + 1] = '\0'; 
+    
+    int carry = 0;
+    int index = maxLength;
+
+    lenA--;
+    lenB--;
+
+    while (lenA >= 0 || lenB >= 0 || carry) {
+        int sum = carry;
+        if (lenA >= 0) {
+            sum += a[lenA--] - '0';
+        }
+        if (lenB >= 0) {
+            sum += b[lenB--] - '0';
+        }
+        result[index--] = (sum % 2) + '0';
+        carry = sum / 2;
+    }
+
+   
+    return result + index + 1;
+}
