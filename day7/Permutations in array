@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+
+int compareAsc(const void* a, const void* b) {
+    return (*(int*)a - *(int*)b);
+}
+
+int compareDesc(const void* a, const void* b) {
+    return (*(int*)b - *(int*)a);
+}
+
+bool isPossible(int a[], int b[], int n, int k) {
+    // Sort array a in ascending order
+    qsort(a, n, sizeof(int), compareAsc);
+
+    // Sort array b in descending order
+    qsort(b, n, sizeof(int), compareDesc);
+
+    // Check the condition for each index
+    for (int i = 0; i < n; i++) {
+        if (a[i] + b[i] < k) {
+            return false;
+        }
+    }
+    return true;
+}
+
+int main() {
+    int a1[] = {2, 1, 3};
+    int b1[] = {7, 8, 9};
+    int n1 = sizeof(a1) / sizeof(a1[0]);
+    int k1 = 10;
+    printf(isPossible(a1, b1, n1, k1) ? "True\n" : "False\n");
+
+    int a2[] = {1, 2, 2, 1};
+    int b2[] = {3, 3, 3, 4};
+    int n2 = sizeof(a2) / sizeof(a2[0]);
+    int k2 = 5;
+    printf(isPossible(a2, b2, n2, k2) ? "True\n" : "False\n");
+
+    return 0;
+}
