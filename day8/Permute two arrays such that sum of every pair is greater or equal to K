@@ -1,0 +1,34 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int compareAsc(const void* a, const void* b) {
+    return (*(int*)a - *(int*)b);
+}
+
+int compareDesc(const void* a, const void* b) {
+    return (*(int*)b - *(int*)a);
+}
+
+const char* isPermutationPossible(int a[], int b[], int n, int k) {
+    qsort(a, n, sizeof(int), compareAsc);
+    qsort(b, n, sizeof(int), compareDesc);
+
+    for (int i = 0; i < n; i++) {
+        if (a[i] + b[i] < k) {
+            return "No";
+        }
+    }
+
+    return "Yes";
+}
+
+int main() {
+    int a[] = {2, 1, 3};
+    int b[] = {7, 8, 9};
+    int n = sizeof(a) / sizeof(a[0]);
+    int k = 10;
+
+    printf("Result: %s\n", isPermutationPossible(a, b, n, k));
+
+    return 0;
+}
