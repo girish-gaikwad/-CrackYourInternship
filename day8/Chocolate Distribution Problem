@@ -1,0 +1,80 @@
+#include <stdio.h>
+#include <limits.h>
+
+// Function to sort an array using QuickSort
+void quickSort(int arr[], int low, int high);
+int partition(int arr[], int low, int high);
+void swap(int* a, int* b);
+
+int findMinDiff(int arr[], int n, int m) {
+    // If there are no chocolates or students
+    if (m == 0 || n == 0) {
+        return 0;
+    }
+
+    // Sort the given packets
+    quickSort(arr, 0, n - 1);
+
+    // Number of students cannot be more than number of packets
+    if (n < m) {
+        return -1;
+    }
+
+    // Find the minimum difference
+    int min_diff = INT_MAX;
+
+    // Find the subarray of size m such that the difference between
+    // the last (maximum in case of sorted) and first (minimum in
+    // case of sorted) elements of the subarray is minimum.
+    for (int i = 0; i + m - 1 < n; i++) {
+        int diff = arr[i + m - 1] - arr[i];
+        if (diff < min_diff) {
+            min_diff = diff;
+        }
+    }
+
+    return min_diff;
+}
+
+void quickSort(int arr[], int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
+
+int partition(int arr[], int low, int high) {
+    int pivot = arr[high];
+    int i = (low - 1);
+    for (int j = low; j <= high - 1; j++) {
+        if (arr[j] < pivot) {
+            i++;
+            swap(&arr[i], &arr[j]);
+        }
+    }
+    swap(&arr[i + 1], &arr[high]);
+    return (i + 1);
+}
+
+void swap(int* a, int* b) {
+    int t = *a;
+    *a = *b;
+    *b = t;
+}
+
+// Driver program to test above functions
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n, m;
+        scanf("%d %d", &n, &m);
+        int arr[n];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &arr[i]);
+        }
+        printf("%d\n", findMinDiff(arr, n, m));
+    }
+    return 0;
+}
