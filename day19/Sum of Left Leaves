@@ -1,0 +1,14 @@
+int recursion(struct TreeNode* node, int isLeft) {
+    if (node == NULL) {
+        return 0;
+    }
+ if (node->left==NULL && node->right==NULL) {
+        return isLeft ? node->val : 0;
+    }
+    
+    return recursion(node->left, 1) + recursion(node->right, 0);
+}
+
+int sumOfLeftLeaves(struct TreeNode* root) {
+    return recursion(root, 0);
+}
