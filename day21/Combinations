@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<vector<int>> combine(int n, int k) {
+  std::vector<std::vector<int>> combinations;
+std::vector<int> current;
+ generate(1, current, combinations, n, k);
+    return combinations;        
+    }
+
+private:
+    void generate(int start, std::vector<int>& current, std::vector<std::vector<int>>& combinations, int n, int k) {        if (current.size() == k) {
+        combinations.push_back(current);
+     return;
+        }
+
+        for (int i = start; i <= n; i++) {
+ current.push_back(i);
+            generate(i + 1, current, combinations, n, k);
+          current.pop_back();
+        }
+    }    
+};
