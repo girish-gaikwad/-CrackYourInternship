@@ -1,0 +1,24 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int minCost(int coins[], int n, int k) {
+    // Sort the array of coin values
+    sort(coins, coins + n);
+
+    int coins_needed = (n + k) / (k + 1);
+
+    int total_cost = 0;
+    for (int i = 0; i < coins_needed; i++) {
+        total_cost += coins[i];
+    }
+
+    return total_cost;
+}
+
+int main() {
+    int coins[] = {2, 9, 6, 22, 1, 3, 10, 50};
+    int n = sizeof(coins) / sizeof(coins[0]);
+    int k = 3;
+    cout << minCost(coins, n, k);
+    return 0;
+}
