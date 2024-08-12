@@ -1,0 +1,21 @@
+int evaluatePostfixExpression(const std::string &S) {
+    std::stack<int> stack;
+
+    for (char ch : S) {
+        if (isdigit(ch)) {
+            stack.push(ch - '0');
+        } else {
+            int operand2 = stack.top(); stack.pop();
+            int operand1 = stack.top(); stack.pop();
+
+            switch (ch) {
+                case '+': stack.push(operand1 + operand2); break;
+                case '-': stack.push(operand1 - operand2); break;
+                case '*': stack.push(operand1 * operand2); break;
+                case '/': stack.push(operand1 / operand2); break;
+            }
+        }
+    }
+
+    // The final result will be the only element left in the stack
+    return stack.top();}
