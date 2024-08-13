@@ -1,0 +1,25 @@
+class Solution {
+    void findCombinations(int index, int target, vector<int>& candidates, vector<vector<int>>& result, vector<int>& currentCombination) {
+        if (target == 0) {
+            result.push_back(currentCombination);
+    return;
+        }
+        
+ for (int i = index; i < candidates.size(); i++) {
+            if (i > index && candidates[i] == candidates[i - 1]) continue;
+                  if (candidates[i] > target) break;
+            
+    currentCombination.push_back(candidates[i]);
+            findCombinations(i + 1, target - candidates[i], candidates, result, currentCombination);
+            currentCombination.pop_back();
+        }
+    }
+public:
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        vector<vector<int>> result;
+    vector<int> currentCombination;
+        sort(candidates.begin(), candidates.end());
+        findCombinations(0, target, candidates, result, currentCombination);
+        return result;
+    }
+};
