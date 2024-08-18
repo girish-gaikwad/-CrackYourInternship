@@ -1,0 +1,20 @@
+class Solution{
+  public:
+    vector<vector<string>> Anagrams(vector<string>& string_list) {
+        unordered_map<string, vector<string>> anagramMap;
+
+        for (string word : string_list) {
+            string sortedWord = word;
+            sort(sortedWord.begin(), sortedWord.end());
+
+            anagramMap[sortedWord].push_back(word);
+        }
+
+        vector<vector<string>> result;
+        for (auto& entry : anagramMap) {
+            result.push_back(entry.second);
+        }
+
+        return result;
+    }
+};
