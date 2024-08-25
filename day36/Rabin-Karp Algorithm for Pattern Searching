@@ -1,1 +1,50 @@
-a
+int n = text.length();
+    int m = pattern.length();
+    int pHash = 0;  // hash value for pattern
+    int tHash = 0;  // hash value for text
+    int h = 1;
+    int d = 256;    // number of characters in the input alphabet
+    int q = 101;    // A prime number to use with modulus for hashing
+    vector<int> result;
+
+    // The value of h would be "pow(d, m-1)%q"
+    for (int i = 0; i < m - 1; i++) {
+        h = (h * d) % q;
+    }
+
+    // Calculate the hash value of pattern and first window of text
+    for (int i = 0; i < m; i++) {
+        pHash = (d * pHash + pattern[i]) % q;
+        tHash = (d * tHash + text[i]) % q;
+    }
+
+    // Slide the pattern over text one by one
+    for (int i = 0; i <= n - m; i++) {
+        // Check the hash values of current window of text and pattern
+        if (pHash == tHash) {
+            // Check for characters one by one
+            bool match = true;
+            for (int j = 0; j < m; j++) {
+                if (text[i + j] != pattern[j]) {
+                    match = false;
+                    break;
+                }
+            }
+            if (match) {
+                result.push_back(i + 1);  // 1-based index
+            }
+        }
+
+        // Calculate hash value for next window of text:
+        // Remove leading digit, add trailing digit
+        if (i < n - m) {
+            tHash = (d * (tHash - text[i] * h) + text[i + m]) % q;
+
+            // We might get negative value of tHash, converting it to positive
+            if (tHash < 0) {
+                tHash = (tHash + q);
+            }
+        }
+    }
+
+    return result;
