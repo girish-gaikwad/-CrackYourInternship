@@ -1,0 +1,30 @@
+struct petrolPump {
+    int petrol;
+    int distance;
+};
+
+class Solution{
+  public:
+ 
+    int tour(petrolPump p[], int n)
+    {
+        int start = 0;   // Starting point
+        int deficit = 0; // Petrol deficit
+        int balance = 0; // Current petrol balance
+        
+        for (int i = 0; i < n; i++) {
+            balance += p[i].petrol - p[i].distance;
+            
+            if (balance < 0) {
+                start = i + 1; // Move start to the next pump
+                deficit += balance; // Accumulate the deficit
+                balance = 0; // Reset balance
+            }
+        }
+        
+        if (balance + deficit >= 0)
+            return start;
+        else
+            return -1;
+    }
+};
